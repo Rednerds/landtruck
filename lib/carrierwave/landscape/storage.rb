@@ -69,12 +69,12 @@ module CarrierWave
           content
         end
 
-        def filename
+        def file_name
           metadata[:filename]
         end
 
         def extension
-          File.extname(filename).delete('.')
+          File.extname(file_name).delete('.')
         end
 
         def size

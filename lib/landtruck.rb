@@ -1,6 +1,6 @@
-require "carrierwave/landscape/version"
-require "carrierwave/landscape/connection"
-require "carrierwave/landscape/storage"
+require_relative "carrierwave/landscape/version"
+require_relative "carrierwave/landscape/connection"
+require_relative "carrierwave/landscape/storage"
 
 class CarrierWave::Uploader::Base
   add_config :internal_url

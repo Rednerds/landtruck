@@ -1,8 +1,8 @@
-require_relative 'lib/landtruck/version'
+require_relative 'lib/carrierwave/landscape/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "landtruck"
-  spec.version       = Landtruck::VERSION
+  spec.version       = CarrierWave::Landscape::VERSION
   spec.authors       = ["Boris Gushin"]
   spec.email         = ["me@nile.ninja"]
 

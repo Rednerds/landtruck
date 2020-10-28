@@ -53,7 +53,12 @@ module CarrierWave
 
         def store!(file)
           token = @connection.upload_file(file.to_file)
-          @uploader.model.update_column @uploader.mounted_as, token
+          model = @uploader.model
+          if model.new_record?
+            model.assign_attributes(@uploader.mounted_as => token)
+          else
+            model.update_column(@uploader.mounted_as, token)
+          end
         end
 
         def url(options = {})

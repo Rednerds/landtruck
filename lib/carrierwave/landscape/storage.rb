@@ -22,9 +22,8 @@ module CarrierWave
         new_file
       end
 
-
       def retrieve!(token)
-        File.new(uploader, connection, token)
+        File.new(uploader, connection)
       end
 
       def connection

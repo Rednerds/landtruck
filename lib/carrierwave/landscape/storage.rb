@@ -56,6 +56,7 @@ module CarrierWave
 
           return unless model.persisted?
           model.update_column(@uploader.mounted_as, @connection.upload_file(file.to_file))
+          model.reload
         end
 
         def url(options = {})

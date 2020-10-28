@@ -52,11 +52,10 @@ module CarrierWave
         end
 
         def store!(file)
-          token = @connection.upload_file(file.to_file)
           model = @uploader.model
 
           return unless model.persisted?
-          model.update_column(@uploader.mounted_as, token)
+          model.update_column(@uploader.mounted_as, @connection.upload_file(file.to_file))
         end
 
         def url(options = {})

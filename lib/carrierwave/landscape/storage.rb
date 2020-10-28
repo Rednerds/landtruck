@@ -47,8 +47,8 @@ module CarrierWave
         def url(options = {})
           return if @uploader.identifier.nil?
           host, port = @connection.public_host.split(":")
-
-          URI::HTTPS.build(host: host, port: port, path: "/assets/#{@uploader.identifier}", query: URI.encode_www_form(options))
+          query = options.empty? ? nil : URI.encode_www_form(options)
+          URI::HTTPS.build(host: host, port: port, path: "/assets/#{@uploader.identifier}", query: query).to_s
         end
 
         def read

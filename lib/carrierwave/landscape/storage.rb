@@ -26,6 +26,18 @@ module CarrierWave
         File.new(uploader, connection)
       end
 
+      def cache!(file)
+        new_file = File.new(uploader, connection)
+        new_file.store!(file)
+        new_file
+      end
+
+      def retrieve_from_store!(identifier)
+        file = File.new(uploader, connection)
+        file.read
+        file
+      end
+
       def connection
         @connection ||= begin
           options = credentials = uploader.fog_credentials

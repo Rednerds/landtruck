@@ -35,10 +35,9 @@ module CarrierWave
       end
 
       class File
-        def initialize(uploader, connection, identifier = nil)
+        def initialize(uploader, connection)
           @uploader = uploader
           @connection = connection
-          @identifier = nil
         end
 
         def store!(file)
@@ -47,9 +46,9 @@ module CarrierWave
         end
 
         def url(options = {})
-          return if @identifier.nil?
+          return if @uploader.identifier.nil?
 
-          URI::HTTPS.build(host: connection.public_host, path: "/assets/#{@identifier}", query: URI.encode_www_form(options))
+          URI::HTTPS.build(host: connection.public_host, path: "/assets/#{@uploader.identifier}", query: URI.encode_www_form(options))
         end
 
         def read
@@ -69,9 +68,9 @@ module CarrierWave
         end
 
         def delete
-          return false if @identifier.nil?
+          return false if @uploader.identifier.nil?
 
-          @connection.destroy_file(@identifier)
+          @connection.destroy_file(@uploader.identifier)
         end
 
         private
@@ -82,11 +81,11 @@ module CarrierWave
         end
 
         def metadata
-          @metadata ||= @connection.get_metadata(@identifier)
+          @metadata ||= @connection.get_metadata(@uploader.identifier)
         end
 
         def load_content
-          @content ||= @connection.download_file(@identifier)
+          @content ||= @connection.download_file(@uploader.identifier)
         rescue Connection::FailedRequest
           nil
         end

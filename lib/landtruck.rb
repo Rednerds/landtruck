@@ -8,6 +8,6 @@ class CarrierWave::Uploader::Base
   add_config :public_host
 
   configure do |config|
-    config.storage_engines[:landscape] = 'CarrierWave::Storage::Landscape'
+    config.storage_engines[:landscape] = 'CarrierWave::Landscape::Storage'
   end
 end

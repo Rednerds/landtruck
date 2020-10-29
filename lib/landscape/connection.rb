@@ -28,7 +28,7 @@ module Landscape
       raise InvalidRequest if file.nil?
 
       response = connection.with do |c|
-        c.post("/upload/assets", form: { file: HTTP::FormData::File.new(file), type: identify_type(file) })
+        c.post("#{internal_url}/upload/assets", form: { file: HTTP::FormData::File.new(file), type: identify_type(file) })
       end
       raise FailedRequest.new(json_response(response)) unless response.status.success?
       json_response(response)["token"]
@@ -38,7 +38,7 @@ module Landscape
       raise InvalidRequest if token.nil?
 
       response = connection.with do |c|
-        c.delete("/upload/assets/#{token}")
+        c.delete("#{internal_url}/upload/assets/#{token}")
       end
       raise FailedRequest.new(json_response(response)) unless response.status.success?
       true
@@ -48,7 +48,7 @@ module Landscape
       raise InvalidRequest if file.nil? || token.nil?
 
       response = connection.with do |c|
-        c.put("/upload/assets/#{token}", form: { file: HTTP::FormData::File.new(file), type: identify_type(file) })
+        c.put("#{internal_url}/upload/assets/#{token}", form: { file: HTTP::FormData::File.new(file), type: identify_type(file) })
       end
       raise FailedRequest.new(json_response(response)) unless response.status.success?
       token
@@ -58,7 +58,7 @@ module Landscape
       raise InvalidRequest if token.nil?
 
       response = connection.with do |c|
-        c.get("/assets/#{token}/metadata")
+        c.get("#{internal_url}/assets/#{token}/metadata")
       end
 
       json_response(response).symbolize_keys
@@ -84,18 +84,15 @@ module Landscape
     def connection
       @connection ||= ConnectionPool.new(size: CONNECTION_POOL, timeout: TIMEOUT) do
         HTTP.auth(authorization)
-            .use(:auto_inflate)
+            .use(:auto_inflate, :auth_deflate)
             .accept(:json)
+            .nodelay
             .timeout(connect: CONNECT_TIMEOUT, read: READ_TIMEOUT, write: WRITE_TIMEOUT)
       end
     end
 
     def authorization
       JWT.encode({ iss: Rails.application.class.name }, private_key, "PS256")
-    end
-
-    def expiration
-      Time.now.to_i + TOKEN_EXPIRATION
     end
 
     def private_key

@@ -92,7 +92,7 @@ module Landscape
     end
 
     def authorization
-      JWT.encode({ exp: expiration }, private_key, "PS256")
+      JWT.encode({ iss: Rails.application.class.name }, private_key, "PS256")
     end
 
     def expiration

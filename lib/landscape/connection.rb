@@ -74,7 +74,7 @@ module Landscape
       file_type = MimeMagic.by_magic(file)
       case file_type.mediatype
       when *%w[video image] then file_type.mediatype
-      when "application"
+      when *%w[application text]
         case file_type.subtype
         when *%w[pdf docx html] then "document"
         end

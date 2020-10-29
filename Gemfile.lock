@@ -1,7 +1,12 @@
 PATH
   remote: .
   specs:
-    landtruck (0.1.0)
+    landtruck (0.1.1)
+      connection_pool
+      down (~> 5.0)
+      http (>= 4.0, < 5)
+      jwt (~> 2)
+      mimemagic
 
 GEM
   remote: https://rubygems.org/
@@ -58,12 +63,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  connection_pool
-  down
-  http
-  jwt
   landtruck!
-  mimemagic
   pry
   rake (~> 12.0)
   rspec (~> 3.0)

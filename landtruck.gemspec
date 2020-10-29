@@ -17,5 +17,10 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
+  spec.add_dependency "http", ">= 4.0", "< 5"
+  spec.add_dependency "jwt", "~> 2"
+  spec.add_dependency "connection_pool"
+  spec.add_dependency "down", "~> 5.0"
+  spec.add_dependency "mimemagic"
   spec.add_development_dependency "pry"
 end

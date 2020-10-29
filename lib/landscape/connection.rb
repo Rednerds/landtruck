@@ -83,8 +83,7 @@ module Landscape
 
     def connection
       @connection ||= ConnectionPool.new(size: CONNECTION_POOL, timeout: TIMEOUT) do
-        HTTP.new(internal_url)
-            .headers("Authorization" => authorization)
+        HTTP.headers("Authorization" => authorization)
             .use(:auto_inflate)
             .accept(:json)
             .timeout(connect: CONNECT_TIMEOUT, read: READ_TIMEOUT, write: WRITE_TIMEOUT)

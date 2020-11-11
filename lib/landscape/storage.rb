@@ -13,6 +13,7 @@ module Landscape
     def upload(io, id, shrine_metadata: {}, **options)
       token = connection.upload_file(io.to_io)
       id.replace(token)
+      io.metadata.merge(metadata(id).transform_keys(&:to_s))
     end
 
     def open(id, **options)

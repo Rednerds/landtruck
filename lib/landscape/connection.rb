@@ -28,7 +28,7 @@ module Landscape
       raise InvalidRequest if file.nil?
 
       response = connection.with do |c|
-        c.post("#{internal_url}/upload/assets", form: { file: HTTP::FormData::File.new(file), type: identify_type(file) })
+        c.post("#{internal_url}/upload/assets", form: { file: HTTP::FormData::File.new(file) })
       end
       raise FailedRequest.new(json_response(response)) unless response.status.success?
       json_response(response)["token"]
@@ -68,17 +68,6 @@ module Landscape
 
     def json_response(response)
       JSON.parse(response.to_s)
-    end
-
-    def identify_type(file)
-      file_type = MimeMagic.by_magic(file)
-      case file_type.mediatype
-      when *%w[video image] then file_type.mediatype
-      when *%w[application text]
-        case file_type.subtype
-        when *%w[pdf docx html] then "document"
-        end
-      end
     end
 
     def connection

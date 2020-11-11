@@ -10,9 +10,9 @@ module Landscape
     class FailedRequest < StandardError; end
 
     TOKEN_EXPIRATION = 60
-    TIMEOUT          = 10
-    READ_TIMEOUT     = 10
-    WRITE_TIMEOUT    = 10
+    TIMEOUT          = 60
+    READ_TIMEOUT     = 60
+    WRITE_TIMEOUT    = 60
     CONNECTION_POOL  = 5
     CONNECT_TIMEOUT  = 2
 

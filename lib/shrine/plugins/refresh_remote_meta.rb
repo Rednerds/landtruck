@@ -6,6 +6,7 @@ class Shrine
       module AttacherMethods
         def refresh_metadata!(**options)
           file!.refresh_metadata!(**context, **options)
+          set(file)
         end
       end
 

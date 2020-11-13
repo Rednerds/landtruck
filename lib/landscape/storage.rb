@@ -37,6 +37,11 @@ module Landscape
     end
 
     def update(id, **options)
+      shrine_metadata.merge!(metadata(id).transform_keys(&:to_s))
+    end
+
+    def refresh_metadata(id, **options)
+      connection.get_metadata(id)
     end
 
     private

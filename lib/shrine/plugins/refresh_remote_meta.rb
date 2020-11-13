@@ -7,6 +7,7 @@ class Shrine
         def refresh_metadata!(**options)
           file!.refresh_metadata!(**context, **options)
           set(file)
+          record.save(validate: false)
         end
       end
 

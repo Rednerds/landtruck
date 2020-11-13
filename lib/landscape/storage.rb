@@ -37,18 +37,14 @@ module Landscape
     end
 
     def update(id, **options)
-      shrine_metadata.merge!(metadata(id).transform_keys(&:to_s))
+      shrine_metadata.merge!(metadata(id))
     end
 
-    def refresh_metadata(id, **options)
-      connection.get_metadata(id)
+    def metadata(id)
+      connection.get_metadata(id).transform_keys(&:to_s)
     end
 
     private
-
-    def metadata(id)
-      connection.get_metadata(id)
-    end
 
     def connection
       @connection ||= Connection.new(internal_url: internal_url, certificate: certificate, public_host: public_host)

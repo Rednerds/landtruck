@@ -22,7 +22,7 @@ class Shrine
 
       module FileMethods
         def refresh_metadata!(**options)
-          @metadata = @metadata.merge(storage.refresh_metadata(id))
+          @metadata = @metadata.merge(storage.metadata(id))
         end
       end
     end

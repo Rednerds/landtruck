@@ -24,11 +24,11 @@ module Landscape
       @public_host = public_host
     end
 
-    def upload_file(file)
+    def upload_file(file, filename)
       raise InvalidRequest if file.nil?
 
       response = connection.with do |c|
-        c.post("#{internal_url}/upload/assets", form: { file: HTTP::FormData::File.new(file) })
+        c.post("#{internal_url}/upload/assets", form: { file: HTTP::FormData::File.new(file, filename: filename) })
       end
       raise FailedRequest.new(json_response(response)) unless response.status.success?
       json_response(response)["token"]

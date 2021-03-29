@@ -2,7 +2,6 @@ require "http"
 require "connection_pool"
 require "jwt"
 require "mimemagic"
-require "mimemagic/overlay"
 
 module Landscape
   class Connection
